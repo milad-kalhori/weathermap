@@ -49,7 +49,6 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
 
 });
 
-
 exports.getWeathermapByTime = catchAsync (async (req,res,next) => {
     
     res.status(200).json({
