@@ -34,6 +34,7 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
         console.log('running a task every one minutes');
         const {city} = req.body;
         await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`).then (catchAsync(async function(response) {
+            
             const {weather,wind,clouds} = response.data;
 
             console.log(weather);
@@ -52,7 +53,7 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
 
 exports.getWeathermapByTime = catchAsync (async (req,res,next) => {
     // connect to redis
-    redisDemoSet(req.body);
+    redisDemoSet(req);
 
     res.status(200).json({
         success : true,
