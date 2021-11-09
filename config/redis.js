@@ -8,7 +8,6 @@ const redisDemo = catchAsync(async () => {
         port: 6379,
     });
 
-
     const {weather,wind,clouds} = response.data;
 
     let array = [];
