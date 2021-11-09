@@ -2,14 +2,14 @@ const Redis = require('ioredis');
 const catchAsync = require('../utils/catchAsync');
 
 const redisDemo = catchAsync(async (info) => {
-    
+
     // Connect to Redis at 127.0.0.1, port 6379.
     const redisClient = new Redis({
         host: '127.0.0.1',
         port: 6379,
     });
 
-    const {weather,wind,clouds} = info.data;
+    const {weather,wind,clouds}  = info.data;
 
     let array = [];
     if(array.length >= 10) {
@@ -24,6 +24,5 @@ const redisDemo = catchAsync(async (info) => {
     await redisClient.set('weather',array);
 
 });
-
 
 module.exports = redisDemo;
