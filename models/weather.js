@@ -23,6 +23,10 @@ const weatherSchema = new mongoose.Schema(
         clouds : {
             all: Number
           },
+          createdAt: {
+            type: Date,
+            default: Date.now
+          }
     
 });
 
