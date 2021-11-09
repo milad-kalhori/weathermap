@@ -1,7 +1,8 @@
 const Redis = require('ioredis');
 const catchAsync = require('../utils/catchAsync');
 
-const redisDemo = catchAsync(async (response) => {
+const redisDemo = catchAsync(async (req) => {
+
     // Connect to Redis at 127.0.0.1, port 6379.
     const redisClient = new Redis({
         host: '127.0.0.1',
@@ -15,12 +16,9 @@ const redisDemo = catchAsync(async (response) => {
     
     const data = value.filter((item)=>{
         return ((start<item.createdAt) && (end>item.createdAt) ) 
-    })
+    });
 
     console.log(data);
-
-    // Disconnect from Redis.
-    redisClient.quit();
 });
 
 module.exports = redisDemo;
