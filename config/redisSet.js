@@ -1,14 +1,15 @@
 const Redis = require('ioredis');
 const catchAsync = require('../utils/catchAsync');
 
-const redisDemo = catchAsync(async (response) => {
+const redisDemo = catchAsync(async (info) => {
+    
     // Connect to Redis at 127.0.0.1, port 6379.
     const redisClient = new Redis({
         host: '127.0.0.1',
         port: 6379,
     });
 
-    const {weather,wind,clouds} = response.data;
+    const {weather,wind,clouds} = info.data;
 
     let array = [];
     if(array.length >= 10) {
@@ -22,8 +23,6 @@ const redisDemo = catchAsync(async (response) => {
     // Set key "myname" to have value "Simon Prickett".
     await redisClient.set('weather',array);
 
-    // Disconnect from Redis.
-    redisClient.quit();
 });
 
 
