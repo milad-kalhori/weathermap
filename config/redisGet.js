@@ -6,7 +6,7 @@ const redisDemo = catchAsync(async (req) => {
     // Connect to Redis at 127.0.0.1, port 6379.
     const redisClient = new Redis({
         host: '127.0.0.1',
-        port: 5000,
+        port: 6379,
     });
 
     const {start,end} = req.body;
