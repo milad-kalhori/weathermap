@@ -11,6 +11,8 @@ exports.getNowWeathermap = catchAsync (async (req,res,next) => {
     const {city} = req.body;   
     await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`).then(catchAsync(async function(response) {
       
+    const {weather,wind,clouds} = response.data;
+
       console.log(weather);
       console.log(wind);
       console.log(clouds);
@@ -57,4 +59,3 @@ exports.getWeathermapByTime = catchAsync (async (req,res,next) => {
         msg : 'getWeathermapByTime',
     }) 
 });
-
