@@ -37,6 +37,7 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
             
             const {weather,wind,clouds} = response.data;
 
+            
             console.log(weather);
             console.log(wind);
             console.log(clouds);
@@ -53,10 +54,11 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
 
 exports.getWeathermapByTime = catchAsync (async (req,res,next) => {
     // connect to redis
-    redisDemoSet(req);
+    redisDemoGet(req);
 
     res.status(200).json({
         success : true,
         msg : 'getWeathermapByTime',
     }) 
 });
+
