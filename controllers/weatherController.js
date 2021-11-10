@@ -7,10 +7,10 @@ const redisDemoGet = require('../config/redisGet');
 
 const API_key ="b45da14dc267921b9f079b759ee57d02";
 
-exports.getNowWeathermap = catchAsync (async (req,res,next) => {       
-    const {city} = req.body;   
+exports.getNowWeathermap = catchAsync (async (req,res,next) => {
+    const {city} = req.body;
     await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`).then(catchAsync(async function(response) {
-      
+
     const {weather,wind,clouds} = response.data;
 
       console.log(weather);
@@ -21,7 +21,7 @@ exports.getNowWeathermap = catchAsync (async (req,res,next) => {
         weather,
         wind,
         clouds
-        }); 
+        });
     }));
     res.status(200).json({
         success : true,
@@ -29,21 +29,20 @@ exports.getNowWeathermap = catchAsync (async (req,res,next) => {
     })
 });
 
-exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {           
+exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
     cron.schedule('*/20 * * * * *',catchAsync (async () => {
         console.log('running a task every one minutes');
         const {city} = req.body;
         await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`).then (catchAsync(async function(response) {
-            
+
             const {weather,wind,clouds} = response.data;
 
-            
             console.log(weather);
             console.log(wind);
             console.log(clouds);
 
             // connect to redis
-            redisDemoSet(response);      
+            redisDemoSet(response);
         }));
     }));
     res.status(200).json({
@@ -52,13 +51,15 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
     })
 });
 
+
 exports.getWeathermapByTime = catchAsync (async (req,res,next) => {
+
     // connect to redis
-    redisDemoGet(req);
+    const data =  await redisDemoGet(req);
 
     res.status(200).json({
         success : true,
         msg : 'getWeathermapByTime',
-    }) 
+        data : data
+    })
 });
-
