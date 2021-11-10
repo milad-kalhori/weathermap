@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const cron = require('node-cron');
 const redisDemoSet = require('../config/redisSet');
 const redisDemoGet = require('../config/redisGet');
+const redisDemoGet2 = require('../config/redisGet2');
 
 const API_key ="b45da14dc267921b9f079b759ee57d02";
 
@@ -30,6 +31,8 @@ exports.getNowWeathermap = catchAsync (async (req,res,next) => {
 });
 
 exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
+    let data;
+    let array = [];
     cron.schedule('*/20 * * * * *',catchAsync (async () => {
         console.log('running a task every one minutes');
         const {city} = req.body;
@@ -42,13 +45,18 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
             console.log(clouds);
 
             // connect to redis
-            redisDemoSet(response);
+            redisDemoSet(response,array);
+
         }));
     }));
-    res.status(200).json({
-        success : true,
-        msg : 'getTenLatestWeathermap',
-    })
+
+        const value =  await redisDemoGet2();
+
+        res.status(200).json({
+            success : true,
+            msg : 'getTenLatestWeathermap',
+            data : value
+        })
 });
 
 
@@ -63,3 +71,5 @@ exports.getWeathermapByTime = catchAsync (async (req,res,next) => {
         data : data
     })
 });
+
+
