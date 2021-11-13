@@ -46,16 +46,15 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
 
             // connect to redis
             redisDemoSet(response,array);
-
         }));
     }));
 
         const value =  await redisDemoGet2();
 
-            res.status(200).json({
-                success : true,
-                msg : 'getTenLatestWeathermap',
-                data : value
+        res.status(200).json({
+            success : true,
+            msg : 'getTenLatestWeathermap',
+            data : value
         })
 });
 

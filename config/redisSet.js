@@ -1,7 +1,7 @@
 const Redis = require('ioredis');
 const catchAsync = require('../utils/catchAsync');
 const Promise = require('bluebird');
-const SocketIOClient = require('socket.io-client');
+const socketClient = require('./socketClient');
 
 
 const redisDemo = (info,array) => {
@@ -30,12 +30,9 @@ const redisDemo = (info,array) => {
         const n = array.length - 1;
         const m = array.length - 2;
 
-        if (array.length >= 10 && array[n].wind.speed === array[m].wind.speed){
-            //socket
-            const socket = SocketIOClient.connect('http://localhost:5000/socket');
-            socket.emit('newMessage',{
-                msg : "newMessage from socket"
-            })
+        // 10
+        if (array.length >= 2 && array[n].wind.speed === array[m].wind.speed){
+            socketClient();
         }
 
         return resolve(array);
