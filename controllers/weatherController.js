@@ -5,6 +5,7 @@ const cron = require('node-cron');
 const redisDemoSet = require('../config/redisSet');
 const redisDemoGet = require('../config/redisGet');
 const redisDemoGet2 = require('../config/redisGet2');
+const SocketIOClient = require('socket.io-client');
 
 const API_key ="b45da14dc267921b9f079b759ee57d02";
 
@@ -44,6 +45,12 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
             console.log(wind);
             console.log(clouds);
 
+            //socket
+            const socket = SocketIOClient.connect('http://localhost:5000/socket');
+            socket.emit('newMessage',{
+                msg : "newMessage from socket"
+            })
+
             // connect to redis
             redisDemoSet(response,array);
 
@@ -52,10 +59,10 @@ exports.getTenLatestWeathermap = catchAsync (async (req,res,next) => {
 
         const value =  await redisDemoGet2();
 
-        res.status(200).json({
-            success : true,
-            msg : 'getTenLatestWeathermap',
-            data : value
+            res.status(200).json({
+                success : true,
+                msg : 'getTenLatestWeathermap',
+                data : value
         })
 });
 
@@ -71,5 +78,3 @@ exports.getWeathermapByTime = catchAsync (async (req,res,next) => {
         data : data
     })
 });
-
-
